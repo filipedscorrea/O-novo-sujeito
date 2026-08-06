@@ -11,6 +11,13 @@ html,
 body {
   margin: 0;
   padding: 0;
+  /* Reveal elements sit at translateX(±60%) before they animate in (see
+     .reveal--left/--right below), which genuinely widens the document's
+     layout box beyond the viewport until they're revealed. overflow-x:hidden
+     on body alone isn't reliably propagated to the viewport in every
+     browser, so it's set on both html and body to guarantee the transform
+     overflow is clipped instead of shifting the visible page. */
+  overflow-x: hidden;
 }
 
 body {
@@ -19,7 +26,6 @@ body {
   background: var(--color-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 img {
