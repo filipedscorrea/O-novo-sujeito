@@ -1,0 +1,26 @@
+.secondary-link-area {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-bordo-estrutura);
+}
+
+.secondary-link__label {
+  font-family: var(--font-rodchenko);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+}
+
+.secondary-link__icon {
+  color: var(--color-bordo-estrutura);
+  flex-shrink: 0;
+}

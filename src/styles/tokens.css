@@ -1,0 +1,30 @@
+:root {
+  /* Stepanova Light — used across all sections except Nav and Footer */
+  --color-preto: #000000;
+  --color-bordo-estrutura: #6D0C15;
+  --color-vermelho-impulso: #B7020B;
+  --color-creme-papel: #F5EBD3;
+
+  /* Stepanova Dark — used only in Nav and Footer */
+  --color-vinho-noite: #5E1321;
+  --color-dourado-vanguarda: #E0B84D;
+  --color-creme-luz: #F2E6CF;
+
+  --color-white: #FFFFFF;
+
+  /* Typography */
+  --font-rodchenko: 'Rodchenko', 'Arial Narrow', sans-serif;
+  --font-oswald: 'Oswald', sans-serif;
+  --font-pt-sans: 'PT Sans', sans-serif;
+
+  /* Layout */
+  --viewport-width: 440px;
+  --section-padding-x: 24px;
+  --section-padding-y: 16px;
+  --section-gap: 16px;
+  --nav-height: 96px;
+
+  /* Shared motion */
+  --reveal-duration: 1125ms;
+  --reveal-easing: ease-out;
+}

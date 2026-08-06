@@ -1,0 +1,23 @@
+.kicker {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  padding: 16px 0 16px 24px;
+}
+
+.kicker__text {
+  flex-shrink: 0;
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--color-preto);
+  white-space: nowrap;
+}
+
+.kicker__line {
+  flex: 1 1 auto;
+  height: 2px;
+  background: var(--color-bordo-estrutura);
+}

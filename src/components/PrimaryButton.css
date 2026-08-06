@@ -1,0 +1,39 @@
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 16px;
+  font-family: var(--font-rodchenko);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.9;
+  letter-spacing: 0.1em;
+  text-align: center;
+  transition: transform 120ms ease-out, box-shadow 120ms ease-out;
+  transform: translate(0, 0);
+}
+
+.primary-button--red {
+  background: var(--color-vermelho-impulso);
+  color: var(--color-creme-papel);
+  box-shadow: 4px 4px 0 var(--color-bordo-estrutura);
+}
+
+.primary-button--gold {
+  background: var(--color-dourado-vanguarda);
+  color: var(--color-vinho-noite);
+  box-shadow: 4px 4px 0 var(--color-creme-luz);
+}
+
+.primary-button.is-pressed {
+  transform: translate(4px, 4px);
+}
+
+.primary-button--red.is-pressed {
+  box-shadow: 0 0 0 var(--color-bordo-estrutura);
+}
+
+.primary-button--gold.is-pressed {
+  box-shadow: 0 0 0 var(--color-creme-luz);
+}

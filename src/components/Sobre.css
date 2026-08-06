@@ -1,0 +1,46 @@
+.sobre-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sobre-lockup {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 110 / 83;
+  object-fit: cover;
+}
+
+.sobre-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sobre-headline,
+.sobre-body {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.sobre-headline__text {
+  font-family: var(--font-rodchenko);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  color: var(--color-preto);
+}
+
+.sobre-headline__text em {
+  font-style: normal;
+  color: var(--color-vermelho-impulso);
+}
+
+.sobre-body__text {
+  font-family: var(--font-pt-sans);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-preto);
+}
