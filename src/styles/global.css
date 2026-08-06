@@ -1,0 +1,132 @@
+@import './fonts.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /* Reveal elements sit at translateX(±60%) before they animate in (see
+     .reveal--left/--right below), which genuinely widens the document's
+     layout box beyond the viewport until they're revealed. overflow-x:hidden
+     on body alone isn't reliably propagated to the viewport in every
+     browser, so it's set on both html and body to guarantee the transform
+     overflow is clipped instead of shifting the visible page. */
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-pt-sans);
+  color: var(--color-preto);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Reference viewport: mobile-only, W440. The page is built to this width and
+   centered on wider screens (no tablet/desktop breakpoints in this phase). */
+.app-shell {
+  width: 100%;
+  max-width: var(--viewport-width);
+  margin: 0 auto;
+  position: relative;
+  background: var(--color-white);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Shared scroll-reveal / on-load reveal system (handoff Parte 2, 12.1)   */
+/* ---------------------------------------------------------------------- */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(60%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.reveal {
+  animation-duration: var(--reveal-duration);
+  animation-timing-function: var(--reveal-easing);
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  will-change: transform, opacity;
+}
+
+.reveal.is-visible {
+  animation-play-state: running;
+}
+
+/* Composition layer is only needed while the element is still animating;
+   dropping it after reveal avoids leaving orphaned GPU layers behind
+   (handoff Parte 2, 12.2). */
+.reveal.reveal-done {
+  will-change: auto;
+}
+
+.reveal--up {
+  animation-name: fadeInUp;
+}
+
+.reveal--right {
+  animation-name: fadeInRight;
+}
+
+.reveal--left {
+  animation-name: fadeInLeft;
+}
