@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import PrimaryButton from './PrimaryButton'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import './Nav.css'
 
 const NAV_LINKS = [
@@ -8,7 +9,10 @@ const NAV_LINKS = [
   { id: 'contato', label: 'Contato' },
 ]
 
+const DESKTOP_QUERY = '(min-width: 1024px)'
+
 export default function Nav() {
+  const isDesktop = useMediaQuery(DESKTOP_QUERY)
   const [isOpen, setIsOpen] = useState(false)
   const savedScrollY = useRef(0)
 
@@ -33,6 +37,10 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
+    // No open/closed state exists at the desktop breakpoint (links + CTA
+    // render inline, always visible) — scroll-lock/door logic is fully
+    // bypassed there, not just visually hidden.
+    if (isDesktop) return
     if (isOpen) {
       lockScroll()
     } else {
@@ -42,7 +50,17 @@ export default function Nav() {
       unlockScroll()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen])
+  }, [isOpen, isDesktop])
+
+  // If the mobile menu was left open and the viewport grows past the
+  // desktop breakpoint (e.g. rotating a tablet, resizing a window), force
+  // it closed instead of leaving a stale scroll-locked state with no
+  // hamburger left to close it.
+  useEffect(() => {
+    if (isDesktop && isOpen) {
+      setIsOpen(false)
+    }
+  }, [isDesktop, isOpen])
 
   const handleToggle = () => setIsOpen((open) => !open)
 
@@ -51,6 +69,36 @@ export default function Nav() {
     window.requestAnimationFrame(() => {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     })
+  }
+
+  if (isDesktop) {
+    return (
+      <header className="nav-bar">
+        <img className="nav-brand" src="/assets/nav-brand.png" alt="Lourenço Serpa" />
+        <ul className="nav-links-list-desktop">
+          {NAV_LINKS.map((link) => (
+            <li key={link.id}>
+              <a
+                className="nav-link"
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleNavigate(link.id)
+                }}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <PrimaryButton
+          text="VAMOS CONVERSAR"
+          variant="gold"
+          className="nav-cta-desktop-button"
+          onClick={() => handleNavigate('contato')}
+        />
+      </header>
+    )
   }
 
   return (
