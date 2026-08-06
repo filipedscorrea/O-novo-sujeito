@@ -42,16 +42,22 @@ em `Nav.tsx`).
 ## Fontes
 
 - **Oswald** e **PT Sans**: carregadas via Google Fonts CDN em `index.html`, nada a configurar.
-- **Rodchenko** (Bold, Normal): fonte licenciada via Adobe Fonts (Website
-  Publishing), não deve ser autohospedada (ver handoff, Parte 1, seção 13.3).
-  Para ativar:
-  1. Crie um "Web Project" em [fonts.adobe.com](https://fonts.adobe.com) para
-     o domínio de produção, adicionando Rodchenko Bold e Rodchenko Normal.
-  2. Copie a tag `<link>` gerada pela Adobe e cole em `index.html` no lugar
-     do comentário `<!-- <link rel="stylesheet" href="https://use.typekit.net/YOUR_KIT_ID.css" /> -->`.
+- **Rodchenko** (Bold, Normal): fonte comercial (Paratype, licenciada via
+  Adobe Fonts). Autohospedada em `public/assets/fonts/` a pedido do cliente,
+  com `@font-face` em `src/styles/fonts.css`.
 
-  Até isso ser configurado, o texto em Rodchenko cai no fallback definido em
-  `src/styles/tokens.css` (`--font-rodchenko`), sem quebrar o layout.
+  Atenção à licença: a licença padrão de Adobe Fonts ("Website Publishing")
+  cobre servir a fonte pelo domínio da Adobe, não necessariamente
+  autohospedagem do arquivo `.woff`/`.woff2` (ver handoff, Parte 1, seção
+  13.3). Confirme que a licença de uso web comprada cobre autohospedagem
+  antes de publicar em produção; se não cobrir, troque `fonts.css` por uma
+  tag `<link>` do Web Project da Adobe apontando para o CDN deles, mantendo
+  os mesmos `font-family`/`font-weight` (700 Bold, 400 Normal) para não
+  precisar tocar em mais nada.
+
+  Se os arquivos de fonte forem removidos de `public/assets/fonts/`, o texto
+  em Rodchenko cai no fallback definido em `src/styles/tokens.css`
+  (`--font-rodchenko`), sem quebrar o layout.
 
   Nos screenshots de referência do handoff, textos em Rodchenko (headlines,
   nav-link, faq-title, form labels) aparecem com efeito de small caps

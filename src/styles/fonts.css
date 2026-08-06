@@ -1,0 +1,28 @@
+/*
+ * Rodchenko is a commercial font (Paratype, licensed via Adobe Fonts).
+ * These files are self-hosted at the client's request; the standard Adobe
+ * Fonts "Website Publishing" license does NOT cover self-hosting on its own
+ * (see handoff-consolidado.md, Parte 1, seção 13.3) — self-hosting requires
+ * a separate license purchased directly from Paratype. Confirm that license
+ * covers this use before shipping to production.
+ */
+
+@font-face {
+  font-family: 'Rodchenko';
+  src:
+    url('/assets/fonts/rodchenko-bold.woff2') format('woff2'),
+    url('/assets/fonts/rodchenko-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rodchenko';
+  src:
+    url('/assets/fonts/rodchenko-normal.woff2') format('woff2'),
+    url('/assets/fonts/rodchenko-normal.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
