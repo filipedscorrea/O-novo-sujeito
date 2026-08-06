@@ -25,26 +25,20 @@ npm run build
 npm run preview   # serve o build localmente para conferência
 ```
 
-## Onde colocar os assets
+## Assets
 
 Os arquivos exportados do Figma (fotos, lockups, ícones sociais, posts do
-carrossel, favicons, imagem de OG) vão em `public/assets/`, com o nome exato
-listado em `public/assets/README.md`. O código já referencia cada um por
-caminho absoluto (`/assets/<arquivo>`) — basta soltar o arquivo lá, sem
-mexer em código.
+carrossel, favicons, imagem de OG) já estão em `public/assets/`, ver a lista
+completa em `public/assets/README.md`. O código referencia cada um por
+caminho absoluto (`/assets/<arquivo>`) — para trocar algum, basta substituir
+o arquivo lá, sem mexer em código.
 
-Sem esses arquivos, o site continua funcional: os `<img>` correspondentes
-aparecem como imagem quebrada no lugar certo, sem quebrar o layout.
-
-Os 12 ícones de pilar (`pilar-*-a/b.svg`) e os 2 ícones de nav-toggle do
-checklist original do handoff **não são usados** nesta implementação — a
-Parte 2 do handoff os substituiu por SVG/CSS inline com transform real
-(ver `src/components/PilarIcon.tsx` e o hambúrguer de 3 linhas em `Nav.tsx`).
-As formas dos 6 ícones de pilar em `PilarIcon.tsx` são uma aproximação
-geométrica fiel à descrição do handoff (forma, cor, transform), já que os
-vetores originais do Figma não fazem parte deste repositório — ajuste os
-`path`/`polygon` ali se quiser bater 1:1 com o arquivo de design.
-
+Os 12 ícones de pilar (`pilar-*-a/b.svg`) e os 2 ícones de nav-toggle também
+estão na pasta (fazem parte do checklist original do handoff), mas **não são
+carregados como `<img>`** — a Parte 2 do handoff os substituiu por SVG/CSS
+inline com transform real (ver `src/components/PilarIcon.tsx`, com as formas
+traçadas diretamente das coordenadas desses SVGs, e o hambúrguer de 3 linhas
+em `Nav.tsx`).
 ## Fontes
 
 - **Oswald** e **PT Sans**: carregadas via Google Fonts CDN em `index.html`, nada a configurar.
@@ -58,6 +52,17 @@ vetores originais do Figma não fazem parte deste repositório — ajuste os
 
   Até isso ser configurado, o texto em Rodchenko cai no fallback definido em
   `src/styles/tokens.css` (`--font-rodchenko`), sem quebrar o layout.
+
+  Nos screenshots de referência do handoff, textos em Rodchenko (headlines,
+  nav-link, faq-title, form labels) aparecem com efeito de small caps
+  (primeira letra maiúscula grande, resto em versalete) — é o comportamento
+  nativo da fonte real com conteúdo em minúsculo/frase, não um
+  `text-transform` no CSS. O código já escreve o conteúdo em frase normal
+  (igual ao "Conteúdo" do handoff); o efeito aparece sozinho assim que a
+  Rodchenko real for carregada. `ticker-item` e `pilar-label` (Oswald) são a
+  exceção: esses dois usam `text-transform: uppercase` de propósito, porque
+  o screenshot de referência mostra caixa alta uniforme nesses dois casos
+  específicos, diferente do kicker (também Oswald), que não é.
 
 ## Formulário de contato (seção Contato)
 
@@ -93,10 +98,18 @@ public/
 ## Decisões registradas durante a implementação
 
 - **Pilar-icon**: seções 4.3 (Parte 1) e 5.3 (Parte 2) do handoff. Formas
-  construídas em SVG inline, aproximação geométrica (ver nota acima).
-- **Ângulo do hexágono de autonomia (30°)**: decisão de implementação já
-  sinalizada como não confirmada contra o Figma original (handoff, Parte 2,
-  seção 13). Ajustável em `PilarIcon.tsx` sem tocar em lógica.
+  construídas em SVG inline, com as coordenadas traçadas diretamente dos
+  `pilar-*-a.svg` reais (`public/assets/`) — o toggle usa CSS transform
+  (rotate/translate/scale conforme o pilar) sobre a geometria do estado A
+  para reproduzir o estado B, em vez de cross-fade entre duas imagens. Ao
+  conferir os SVGs reais, nenhum dos 6 pilares troca de cor entre estados
+  (a tabela da Parte 1 descrevia bordô→vermelho para cultura e autonomia,
+  mas os arquivos exportados usam a mesma cor nos dois estados).
+- **Ângulo do hexágono de autonomia (30°)**: a Parte 2 já confirmava esse
+  valor como implementado, mas sinalizava como não confirmado contra o
+  Figma original (handoff, Parte 2, seção 13). Ao conferir o par de SVGs
+  reais (`pilar-autonomia-a/b.svg`), a rotação de 30° bate exatamente com a
+  diferença entre os dois arquivos exportados.
 - **Flash residual no `pratica-montage`**: o handoff (Parte 2, seção 7.4)
   recomendava resolver isso com binding declarativo padrão do React
   (`<img src={variant}>`, recalculado a cada render) em vez da solução

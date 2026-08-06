@@ -43,4 +43,5 @@
   letter-spacing: 0.2em;
   color: var(--color-creme-papel);
   white-space: nowrap;
+  text-transform: uppercase;
 }

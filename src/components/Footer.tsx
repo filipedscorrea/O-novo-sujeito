@@ -38,7 +38,7 @@ export default function Footer() {
             TERMOS E CONDIÇÕES
           </a>
           <a className="footer-legal__link" href="" onClick={(e) => e.preventDefault()}>
-            POLÍTICAS DE PRIVACIDADE
+            POLÍTICA DE PRIVACIDADE
           </a>
         </div>
       </div>

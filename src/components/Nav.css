@@ -134,6 +134,7 @@
   letter-spacing: 0.1em;
   color: var(--color-creme-luz);
   text-align: center;
+  text-transform: uppercase;
 }
 
 .nav-cta-area {

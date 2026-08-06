@@ -38,12 +38,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-bordo-estrutura);
 }
 
 .redes-icon-area__img {
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  height: 44px;
 }
 
 .redes-carrossel {

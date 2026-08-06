@@ -1,15 +1,8 @@
 # Assets
 
-Coloque aqui os arquivos exportados do Figma, com o nome exato listado abaixo
-(minúsculo, hífen, sem acento, igual ao handoff seção 11.2). O código referencia
-cada um por caminho absoluto (`/assets/<arquivo>`), então basta soltar o
-arquivo aqui, sem tocar em código.
-
-Dos 28 assets do checklist original do handoff, 11 (os 12 SVGs de pilar-* e os
-2 nav-toggle-*.svg) não são necessários nesta implementação: a Parte 2 do
-handoff substituiu ambos por SVG/CSS inline com transform real (pilar-icon,
-seção 5.3; hamburger de 3 linhas, seção 1.4), então não há arquivo para
-colocar para eles.
+Todos os 17 arquivos usados diretamente pelo código já estão aqui, exportados
+do Figma com o nome exato do handoff (seção 11.2). O código referencia cada
+um por caminho absoluto (`/assets/<arquivo>`).
 
 | Arquivo | Dimensões | Seção |
 | --- | --- | --- |
@@ -31,6 +24,14 @@ colocar para eles.
 | `favicon-192x192.png` | 192 × 192 | Metadados |
 | `og-image.png` | 8000 × 4209 | Metadados |
 
-Até esses arquivos serem adicionados, o layout continua funcional: os
-`<img>` correspondentes aparecem como imagem quebrada (broken image) no
-lugar certo, sem quebrar o restante da página.
+## Arquivos presentes mas não referenciados pelo código
+
+Os 12 SVGs de `pilar-*-a/b.svg` e os 2 `nav-toggle-*.svg` também estão aqui
+(parte do checklist original do handoff, seção 11.2), mas o código não os
+carrega como `<img>`: a Parte 2 do handoff substituiu ambos por SVG/CSS
+inline com transform real (`src/components/PilarIcon.tsx` para os pilares,
+seção 5.3; hambúrguer de 3 `<span>` em `Nav.tsx`, seção 1.4).
+
+As formas em `PilarIcon.tsx` foram traçadas diretamente das coordenadas
+destes `pilar-*.svg`, então batem com o design original mesmo sendo
+reimplementadas como markup inline em vez de `<img>`.
