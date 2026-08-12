@@ -1,0 +1,180 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background: var(--color-vinho-noite);
+  /* Same reasoning as .sobre-section/.pratica-section/.redes-section:
+     .footer-brand's pre-reveal translateX(-60%) paints outside the footer's
+     bounds unless contained. */
+  overflow: hidden;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 4px;
+  padding: 12px 24px 16px;
+}
+
+.footer-brand__logo {
+  width: 249px;
+  height: 83px;
+  object-fit: contain;
+}
+
+.footer-brand__tagline {
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: var(--color-creme-luz);
+  text-align: center;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 16px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-dourado-vanguarda);
+}
+
+.footer-contato {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-contato__label {
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--color-dourado-vanguarda);
+}
+
+.footer-contato__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.footer-contato__link {
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--color-creme-luz);
+}
+
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.footer-legal__link {
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--color-dourado-vanguarda);
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-dourado-vanguarda);
+}
+
+.footer-bottom__text {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--color-dourado-vanguarda);
+  text-align: center;
+}
+
+/* Mobile 440: the width-fill + smaller font-size below are a 393-only fix
+   for text that wraps to two lines at that narrower width — 440 has more
+   room and keeps the original 9px. */
+@media (min-width: 400px) {
+  .footer-bottom__text {
+    font-size: 9px;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): footer-info switches from stacked */
+/* (footer-contato above footer-legal) to side-by-side, each filling half  */
+/* the row — a real structural difference in flex direction, not just a   */
+/* size tweak. Same full-bleed breakout as every other section, needed    */
+/* here since footer-contato/footer-legal's fill widths (468/596/676) are */
+/* computed against the true viewport width, not .app-shell's 440px cap.  */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .footer {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .footer-brand {
+    gap: 8px;
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .footer-brand__logo {
+    width: 384px;
+    height: 128px;
+  }
+
+  .footer-brand__tagline {
+    font-size: 20px;
+    letter-spacing: 0.2em;
+  }
+
+  .footer-info {
+    flex-direction: row;
+    padding: 24px 36px;
+    gap: 16px;
+  }
+
+  .footer-contato,
+  .footer-legal {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .footer-contato__label,
+  .footer-contato__link,
+  .footer-legal__link {
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .footer-bottom__text {
+    font-size: 14px;
+  }
+}

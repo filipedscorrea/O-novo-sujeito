@@ -1,0 +1,285 @@
+.abordagem-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+  padding: 0;
+}
+
+.abordagem-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+}
+
+/* --- Pilares grid --- */
+
+.abordagem-pilares {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 16px;
+  column-gap: 16px;
+  width: 100%;
+  /* 72px@393 -> 92px@440, same two-point interpolation used for headline
+     font-sizes elsewhere (Hero.css, Sobre.css) — no behavior change between
+     the reference points, just no abrupt jump. */
+  padding: 24px clamp(72px, calc(42.55vw - 95.23px), 92px);
+  overflow: hidden;
+}
+
+.pilar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+  height: 120px;
+}
+
+.pilar-icon {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* The SVG's own width/height (PilarIcon.tsx, unchanged — same six assets,
+   same 900ms A/B toggle transition) still say 70x70; sizing the icon here
+   instead of touching those files. */
+.pilar-icon svg {
+  width: 72px;
+  height: 72px;
+}
+
+.pilar-label {
+  font-family: var(--font-oswald);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--color-preto);
+  text-align: center;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+
+/* --- FAQ accordion --- */
+
+.abordagem-faq {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+  padding: 16px 0;
+  overflow: hidden;
+}
+
+.faq-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px 24px 0;
+}
+
+.faq-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+}
+
+.faq-item__title-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.faq-item__title {
+  font-family: var(--font-rodchenko);
+  font-weight: 400;
+  /* 17px@393 -> 19px@440, same two-point interpolation pattern as above. */
+  font-size: clamp(17px, calc(4.26vw + 0.28px), 19px);
+  letter-spacing: 0.1em;
+  color: var(--color-preto);
+}
+
+.faq-item__underline {
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-vermelho-impulso);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 750ms ease-in-out;
+}
+
+.faq-item.is-open .faq-item__underline {
+  transform: scaleX(1);
+}
+
+.faq-item__chevron {
+  flex-shrink: 0;
+  color: var(--color-preto);
+  transition: transform 750ms ease-out;
+}
+
+.faq-item.is-open .faq-item__chevron {
+  transform: rotate(180deg);
+}
+
+.faq-item__content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 750ms ease-out, opacity 750ms ease-out;
+}
+
+.faq-item.is-open .faq-item__content {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.faq-item__answer {
+  padding-top: 24px;
+  font-family: var(--font-pt-sans);
+  font-weight: 400;
+  /* 13px@393 -> 14px@440, same two-point interpolation pattern as above. */
+  font-size: clamp(13px, calc(2.13vw + 4.64px), 14px);
+  letter-spacing: 0;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+.faq-item__separator {
+  margin-top: 16px;
+  height: 1px;
+  background: var(--color-preto);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact (1024–1279px): pilares beside a new FAQ+link column.   */
+/*                                                                        */
+/* Same full-bleed breakout as hero-section/sobre-section/topics-ticker:  */
+/* escapes .app-shell's 440px-capped column so this section alone can use */
+/* the true viewport width. .app-shell/.landing-page-content stay         */
+/* untouched — pratica-section and below still render inside that capped  */
+/* column until their own responsive pass.                                */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .abordagem-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 36px 0;
+    gap: 16px;
+  }
+
+  .abordagem-content {
+    flex-direction: row;
+    justify-content: center;
+    /* stretch, not center: abordagem-pilares and abordagem-faq-content are
+       row siblings, and abordagem-faq-content's height changes whenever a
+       FAQ item opens/closes. Under center, that row-height change visibly
+       shifted/resized abordagem-pilares along with it, even though its own
+       content never changed. Stretch makes abordagem-pilares fill the
+       row's full height instead — its content stays pinned via
+       align-content: start below, so only the empty space around the
+       fixed-size 2x3 grid grows or shrinks, and the grid itself never
+       moves. */
+    align-items: stretch;
+  }
+
+  .abordagem-section .kicker {
+    padding-left: 36px;
+  }
+
+  .abordagem-pilares {
+    width: auto;
+    flex-shrink: 0;
+    row-gap: 32px;
+    column-gap: 32px;
+    /* Lateral padding unchanged; bottom stays 0 (height comes from stretch
+       on .abordagem-content, not hug + padding). Top is 32px purely as
+       breathing room under abordagem-kicker — it doesn't reintroduce the
+       displacement bug: the box's height is still dictated by the row
+       (stretch), so this padding just pushes the grid down slightly within
+       that already-fixed-height box, via align-content: start, same as
+       before. */
+    padding: 32px 60px 0;
+    align-content: start;
+  }
+
+  .abordagem-faq-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+    gap: 16px;
+    padding: 0;
+  }
+
+  .abordagem-faq {
+    gap: 24px;
+  }
+
+  .pilar-label {
+    font-size: 16px;
+  }
+
+  .faq-item__title {
+    font-size: 24px;
+  }
+
+  .faq-item__answer {
+    font-size: 18px;
+  }
+
+  .faq-item__chevron {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Desktop full/wide (>=1280px): same structure, wider pilares padding and
+   larger FAQ type sizes — line-title stays 28 through 1280 and 1440
+   (only expanded-content still grows at 1440, see below). */
+@media (min-width: 1280px) {
+  .abordagem-pilares {
+    padding: 32px 80px 0;
+  }
+
+  .faq-item__title {
+    font-size: 28px;
+  }
+
+  .faq-item__answer {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .faq-item__answer {
+    font-size: 24px;
+  }
+
+  .abordagem-faq-content {
+    gap: 24px;
+  }
+
+  .pilar {
+    width: 140px;
+  }
+
+  .pilar-label {
+    font-size: 18px;
+  }
+}

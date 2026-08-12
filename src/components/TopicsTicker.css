@@ -1,0 +1,101 @@
+.topics-ticker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  padding: 32px 24px;
+}
+
+.ticker-track {
+  /* Single source of truth for the item-to-item rhythm: read by
+     .ticker-scroll (gap between the two duplicated copies) and
+     .ticker-sequence (gap within each copy), so both always match. */
+  --ticker-gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--color-vinho-noite);
+}
+
+.ticker-scroll {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: var(--ticker-gap);
+  animation-name: ticker-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  /* animation-duration comes from an inline style (TopicsTicker.tsx),
+     measured off the rendered content so px/second stays constant across
+     breakpoints instead of a fixed seconds value scrolling at different
+     speeds when the content is wider (desktop) or narrower (mobile). */
+}
+
+@keyframes ticker-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Exactly one copy's width, since the two rendered copies are
+       byte-identical — the second copy is then sitting exactly where the
+       first started, so the reset to 0% is invisible. */
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-sequence {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--ticker-gap);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-scroll {
+    animation: none;
+  }
+}
+
+.ticker-item {
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  letter-spacing: 0.2em;
+  color: var(--color-creme-papel);
+  text-align: left;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): identical spec across all three  */
+/* — only font-size/gap/padding change from mobile, never structure.      */
+/*                                                                        */
+/* Same full-bleed technique as hero-section (Hero.css): breaks out of    */
+/* .app-shell's 440px-capped column so this section alone can span the    */
+/* true viewport width. .app-shell/.landing-page-content stay untouched — */
+/* sobre-section and everything below it still render inside that capped  */
+/* column until their own responsive pass, so there's an expected width   */
+/* seam between topics-ticker and sobre-section at these breakpoints.     */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .topics-ticker {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 32px 36px;
+  }
+
+  .ticker-track {
+    --ticker-gap: 16px;
+  }
+
+  .ticker-item {
+    font-size: 20px;
+  }
+}

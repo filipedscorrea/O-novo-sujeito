@@ -1,0 +1,72 @@
+.secondary-link-area {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-bordo-estrutura);
+  /* The browser's default <a> underline (offset: auto) was never reset, so
+     it rendered alongside secondary-link__label's own explicit underline —
+     two parallel lines at different offsets. Underline lives on the label
+     only; the anchor itself stays undecorated. */
+  text-decoration: none;
+}
+
+.secondary-link__label {
+  font-family: var(--font-rodchenko);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.secondary-link__icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-bordo-estrutura);
+  flex-shrink: 0;
+}
+
+/* Mobile 440: the smaller label/icon sizes above are a 393-only fix —
+   440 keeps the original sizes. */
+@media (min-width: 400px) {
+  .secondary-link__label {
+    font-size: 20px;
+  }
+
+  .secondary-link__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Desktop, shared across every section that reuses SecondaryLink (hero,
+   sobre, abordagem) so sizes stay in lockstep from one place instead of
+   each section's own (now-removed) scoped override. */
+@media (min-width: 1024px) {
+  .secondary-link__label {
+    font-size: 22px;
+  }
+
+  .secondary-link__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .secondary-link__label {
+    font-size: 26px;
+  }
+
+  .secondary-link__icon {
+    width: 28px;
+    height: 28px;
+  }
+}

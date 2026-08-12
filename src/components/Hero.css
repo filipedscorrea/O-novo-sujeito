@@ -1,0 +1,263 @@
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Same reasoning as .sobre-section/.pratica-section/.redes-section/
+     .footer: hero-lockup's pre-reveal translateX(60%)/(-60%) paints
+     outside the section's bounds for the ~1.1s entrance animation unless
+     contained, adding real horizontal scroll to the page during that
+     window (mobile and desktop both, since the reveal runs on load
+     regardless of breakpoint). */
+  overflow: hidden;
+}
+
+.hero-lockup-frame {
+  /* No box of its own below 1024px — hero-lockup renders as a direct flex
+     item of hero-section, exactly like before this element existed. */
+  display: contents;
+}
+
+.hero-lockup {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 55 / 36;
+  object-fit: cover;
+}
+
+.hero-kicker-content {
+  /* No box of its own below 1024px — see the comment in Hero.tsx. */
+  display: contents;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  /* stretch, not center: the headline/body already carry their own
+     width:100%, but the secondary-link reveal wrapper (Hero.tsx) doesn't —
+     under center it shrinks to content, which both breaks its internal
+     justify-content:flex-end and (at mobile) visually centers the link
+     instead of right-aligning it. Stretch makes every child full width so
+     each one's own text-align/justify-content is what positions it. */
+  align-items: stretch;
+  width: 100%;
+}
+
+.hero-headline,
+.hero-body {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.hero-headline__text {
+  margin: 0;
+  font-family: var(--font-rodchenko);
+  font-weight: 700;
+  font-size: clamp(32px, calc(8.51vw - 1.45px), 36px);
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  color: var(--color-preto);
+}
+
+.hero-headline__text em {
+  font-style: normal;
+  color: var(--color-vermelho-impulso);
+}
+
+.hero-body__text {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-size: clamp(14px, calc(4.26vw - 2.72px), 16px);
+  line-height: 1.9;
+  color: var(--color-preto);
+}
+
+.hero-cta-primary-area {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): horizontal hero layout.          */
+/*                                                                        */
+/* hero-section breaks out of .app-shell's 440px-capped column using the  */
+/* same centering technique nav-bar already uses (Nav.css), adapted to    */
+/* static flow: a fluid width anchored to the true viewport instead of    */
+/* .app-shell's fixed column, so this section alone can use the full      */
+/* viewport width for its desktop layout. .app-shell/.landing-page-content*/
+/* are intentionally left untouched — every other section still renders   */
+/* inside that capped column until its own responsive pass.               */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .hero-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+    gap: 36px;
+  }
+
+  .hero-lockup-frame {
+    display: block;
+    flex-shrink: 0;
+    width: 576px;
+    height: 600px;
+  }
+
+  .hero-lockup {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
+
+  .hero-kicker-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 340px;
+    /* min-height, not height: at large font-sizes (1440 especially) the
+       three children can need more than the reference-frame figure: growing
+       is safe, clipping/overflowing past hero-section into the next section
+       is not. */
+    min-height: 600px;
+  }
+
+  .hero-section .kicker {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    min-height: 78px;
+    gap: 16px;
+    padding: 16px 0;
+  }
+
+  .hero-section .kicker__text {
+    /* Kicker.css's base nowrap fits the horizontal mobile layout; the
+       vertical desktop kicker sits in a fixed-width column
+       (hero-kicker-content), so wrapping is kept as headroom in case a
+       future size increase needs it again. hero-section intentionally
+       uses smaller sizes than the shared Kicker.css desktop values. */
+    white-space: normal;
+    font-size: 20px;
+    text-align: right;
+  }
+
+  .hero-section .kicker__line {
+    /* flex: 1 1 auto (Kicker.css) is the base horizontal-mobile behavior,
+       where the line grows to fill the row beside the text. In the vertical
+       desktop kicker it's a main-axis (height) property instead, and
+       flex-shrink collapses it to 0 against the fixed-height box — pin it
+       to a real 2px so it renders as the stroke the design calls for. */
+    flex: 0 0 2px;
+    width: 100%;
+    height: 2px;
+  }
+
+  .hero-headline,
+  .hero-body {
+    padding: 8px 0;
+  }
+
+  .hero-headline__text,
+  .hero-body__text {
+    text-align: right;
+  }
+
+  .hero-headline__text {
+    font-size: 44px;
+  }
+
+  .hero-body__text {
+    font-size: 16px;
+  }
+
+  .hero-section .secondary-link-area {
+    padding: 16px 0;
+    height: 68px;
+  }
+
+  .hero-cta-primary-area .primary-button {
+    font-size: 26px;
+  }
+}
+
+/* Desktop full (1280–1439px): same structure, larger type/spacing. */
+@media (min-width: 1280px) {
+  .hero-lockup-frame {
+    width: 732px;
+    height: 632px;
+  }
+
+  .hero-kicker-content {
+    width: 440px;
+    min-height: 632px;
+  }
+
+  .hero-section .kicker {
+    min-height: 74px;
+    gap: 12px;
+  }
+
+  .hero-headline {
+    padding: 4px 0;
+  }
+
+  .hero-headline__text {
+    font-size: 60px;
+  }
+
+  .hero-body__text {
+    font-size: 18px;
+  }
+
+  .hero-cta-primary-area .primary-button {
+    font-size: 32px;
+  }
+}
+
+/* Desktop wide (>=1440px): same structure again, tallest frame. */
+@media (min-width: 1440px) {
+  .hero-lockup-frame {
+    width: 892px;
+    height: 856px;
+  }
+
+  .hero-kicker-content {
+    min-height: 856px;
+  }
+
+  .hero-section .kicker {
+    min-height: 84px;
+    gap: 16px;
+  }
+
+  .hero-section .kicker__text {
+    font-size: 24px;
+  }
+
+  .hero-headline {
+    padding: 24px 0;
+  }
+
+  .hero-headline__text {
+    font-size: 64px;
+  }
+
+  .hero-body {
+    padding: 24px 0;
+  }
+
+  .hero-body__text {
+    font-size: 26px;
+  }
+
+  .hero-section .secondary-link-area {
+    height: auto;
+    padding: 24px 0;
+  }
+}

@@ -1,0 +1,190 @@
+.contato-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contato-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.contato-body {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.contato-body__text {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-preto);
+}
+
+.contato-confirmation {
+  width: 100%;
+  padding: 16px 24px;
+  text-align: center;
+}
+
+.contato-confirmation__title {
+  font-family: var(--font-rodchenko);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-preto);
+  margin: 0 0 8px;
+}
+
+.contato-confirmation__body {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-preto);
+}
+
+.contato-confirmation__body u {
+  text-decoration-color: var(--color-vermelho-impulso);
+}
+
+.contato-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 24px;
+  padding: 16px 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 8px;
+}
+
+.form-field:has(.form-field__input:disabled) {
+  opacity: 0.5;
+}
+
+.form-field__label {
+  font-family: var(--font-rodchenko);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-preto);
+}
+
+.form-field__input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--color-white);
+  border: 1px solid var(--color-vermelho-impulso);
+  font-family: var(--font-pt-sans);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-preto);
+}
+
+.form-field__input:focus {
+  outline: none;
+  border-width: 2px;
+}
+
+.form-field__input--error {
+  border-width: 2px;
+}
+
+.form-field__input:disabled {
+  cursor: not-allowed;
+}
+
+.form-field__error {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-size: 14px;
+  color: var(--color-vermelho-impulso);
+}
+
+.contato-cta-primary-area {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.form-error {
+  width: 100%;
+  padding: 0 24px;
+  font-family: var(--font-pt-sans);
+  font-size: 14px;
+  color: var(--color-vermelho-impulso);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): same top-to-bottom structure as   */
+/* mobile (kicker -> body -> form -> cta), only sizes/paddings change —    */
+/* same full-bleed breakout as every other section done so far.           */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .contato-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .contato-section .kicker {
+    padding-left: 36px;
+  }
+
+  .contato-body,
+  .contato-form,
+  .contato-cta-primary-area {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .form-error {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .contato-confirmation {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .contato-body__text {
+    font-size: 20px;
+  }
+
+  .contato-cta-primary-area .primary-button {
+    font-size: 26px;
+  }
+
+  .form-field__label {
+    font-size: 28px;
+    letter-spacing: 0.05em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .form-field__label {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .contato-body__text {
+    font-size: 26px;
+  }
+
+  .form-field__label {
+    font-size: 32px;
+  }
+}

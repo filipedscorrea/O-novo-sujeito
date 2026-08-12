@@ -1,0 +1,479 @@
+.pratica-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  /* Same reasoning as .sobre-section (Sobre.css): .pratica-montage's
+     pre-reveal translateX(60%) paints outside this section's bounds unless
+     contained, adding real horizontal scroll to the page at narrow widths. */
+  overflow: hidden;
+}
+
+.pratica-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.pratica-headline {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.pratica-headline__text {
+  margin: 0;
+  font-family: var(--font-rodchenko);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+.pratica-headline__text em {
+  font-style: normal;
+  color: var(--color-vermelho-impulso);
+}
+
+.pratica-body {
+  width: 100%;
+  padding: 0 24px;
+}
+
+.pratica-body__text {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.9;
+  letter-spacing: 0;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+.pratica-body__text strong {
+  font-weight: 700;
+}
+
+.pratica-montage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 16px 0;
+}
+
+/* "Sobre o quê"'s answer box sits below the montage-hitbox, which itself
+   already extends slightly past the image's own bottom edge — so showing
+   this answer needs extra room under the image that the other 3 states
+   (default/quem/como) don't. Scoped to this variant only so it doesn't
+   leave empty space below the image the rest of the time. */
+.pratica-montage-content--sobre-o-que {
+  padding-bottom: 40px;
+}
+
+/* Real asset ratio is 1914:1923 (~0.9953:1) — aspect-ratio derives the
+   correct height at any width automatically, mobile or desktop, instead of
+   hardcoding a height per breakpoint. */
+.pratica-montage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1914 / 1923;
+}
+
+.pratica-montage__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Crossfade, all breakpoints (Pratica.tsx): the outgoing image sits on top
+   of the current one (always live, no transition needed on it — see
+   above) and fades from opaque to transparent, revealing the new image
+   underneath. Both photos share the same black-and-white base, so this
+   reads as the red highlight area dissolving from one spot to the other
+   rather than a visible "gap" between two sequential fades. */
+.pratica-montage__img--retiring {
+  z-index: 1;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 450ms ease-in-out;
+}
+
+.pratica-montage__img--retiring.is-fading-out {
+  opacity: 0;
+}
+
+/* "Quem"/"Como"/"Sobre o quê" are pixels baked into the montage photo
+   itself, not real text — these are invisible click targets positioned
+   over them, not visible label chips. */
+.montage-hitbox {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.montage-hitbox--quem {
+  left: calc(45 / 393 * 100%);
+  top: calc(53 / 394.85 * 100%);
+  width: calc(153 / 393 * 100%);
+  height: calc(153 / 394.85 * 100%);
+}
+
+.montage-hitbox--como {
+  left: calc(204 / 393 * 100%);
+  top: calc(194 / 394.85 * 100%);
+  width: calc(153 / 393 * 100%);
+  height: calc(85 / 394.85 * 100%);
+}
+
+.montage-hitbox--sobre-o-que {
+  left: calc(32 / 393 * 100%);
+  top: calc(288 / 394.85 * 100%);
+  width: calc(218 / 393 * 100%);
+  height: calc(125 / 394.85 * 100%);
+}
+
+.montage-body-box {
+  position: absolute;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--color-vermelho-impulso);
+  box-shadow: 2px 2px 0 var(--color-vermelho-impulso);
+  transition: opacity 250ms ease;
+}
+
+.montage-body-box.is-fading {
+  opacity: 0;
+}
+
+.montage-body-box__text {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+.montage-body-box__text strong {
+  font-weight: 400;
+  color: var(--color-vermelho-impulso);
+}
+
+.montage-body-box--quem {
+  left: calc(204 / 393 * 100%);
+  top: calc(52.2 / 394.85 * 100%);
+  width: calc(147 / 393 * 100%);
+  height: auto;
+  padding: 8px;
+}
+
+.montage-body-box--como {
+  left: calc(32 / 393 * 100%);
+  top: calc(185.2 / 394.85 * 100%);
+  width: calc(159 / 393 * 100%);
+  height: auto;
+  padding: 8px;
+}
+
+.montage-body-box--sobre-o-que {
+  left: calc(32 / 393 * 100%);
+  top: calc(341 / 394.85 * 100%);
+  width: calc(332 / 393 * 100%);
+  height: auto;
+  padding: 8px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Mobile 440 (still stacked/overlay, same structure as 393): hitboxes and */
+/* the answer overlay reposition — everything else (font-sizes, montage    */
+/* padding) is identical between 393 and 440 already, so this is the only  */
+/* thing that needs its own breakpoint here. A plain min-width switch      */
+/* rather than clamp(): eight coordinate rectangles don't interpolate as   */
+/* cleanly as a single font-size value, and the percentage-based positions */
+/* already track the (aspect-ratio-driven, continuously fluid) image size */
+/* either way, so the two reference points are enough.                    */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 400px) {
+  .montage-hitbox--quem {
+    left: calc(51 / 440 * 100%);
+    top: calc(61 / 442 * 100%);
+    width: calc(159 / 440 * 100%);
+    height: calc(136 / 442 * 100%);
+  }
+
+  .montage-hitbox--como {
+    left: calc(225 / 440 * 100%);
+    top: calc(195 / 442 * 100%);
+    width: calc(159 / 440 * 100%);
+    height: calc(111 / 442 * 100%);
+  }
+
+  .montage-hitbox--sobre-o-que {
+    left: calc(40 / 440 * 100%);
+    top: calc(319 / 442 * 100%);
+    width: calc(230 / 440 * 100%);
+    height: calc(92 / 442 * 100%);
+  }
+
+  .montage-body-box__text {
+    font-size: 11px;
+  }
+
+  .montage-body-box--quem {
+    left: calc(220 / 440 * 100%);
+    top: calc(61 / 442 * 100%);
+    width: calc(147 / 440 * 100%);
+    height: auto;
+  }
+
+  .montage-body-box--como {
+    left: calc(57 / 440 * 100%);
+    top: calc(208 / 442 * 100%);
+    width: calc(159 / 440 * 100%);
+    height: auto;
+  }
+
+  .montage-body-box--sobre-o-que {
+    left: calc(32 / 440 * 100%);
+    top: calc(419 / 442 * 100%);
+    width: calc(386 / 440 * 100%);
+    height: auto;
+  }
+
+  .pratica-montage-content--sobre-o-que {
+    padding-bottom: 72px;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): montage and written content sit   */
+/* side by side (image left, text right) instead of stacked, and the       */
+/* answer moves out of the image into pratica-body-montage-related. Same   */
+/* full-bleed breakout as every other section done so far — escapes        */
+/* .app-shell's 440px-capped column so this section alone can use the      */
+/* true viewport width. contato-section and below stay inside that capped  */
+/* column until their own responsive pass.                                 */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .pratica-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .pratica-content {
+    flex-direction: row;
+    /* stretch, not center: pratica-montage-content and pratica-written-content
+       are row siblings, and pratica-body-montage-related-body's height
+       changes once a hitbox is clicked (empty -> filled with an answer).
+       Under center, that would have shifted/resized pratica-montage-content
+       along with it, exactly like abordagem-pilares before its own stretch
+       fix. Stretch keeps the montage pinned instead — see
+       .pratica-montage-content's top-anchored justify-content below. */
+    align-items: stretch;
+    justify-content: center;
+    gap: 24px;
+    padding: 0 36px 24px;
+  }
+
+  .pratica-section .kicker {
+    padding-left: 36px;
+  }
+
+  .pratica-montage-content {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    /* Top-anchored (not centered) within the stretched box, so the extra
+       height stretch adds only ever shows up as empty space below the
+       image, and the montage itself never moves — same technique as
+       abordagem-pilares' align-content: start. */
+    justify-content: flex-start;
+    padding: 8px 0;
+  }
+
+  .pratica-montage {
+    width: 100%;
+  }
+
+  .montage-hitbox--quem {
+    left: calc(45 / 464 * 100%);
+    top: calc(69 / 466.18 * 100%);
+    width: calc(187 / 464 * 100%);
+    height: calc(172 / 466.18 * 100%);
+  }
+
+  .montage-hitbox--como {
+    left: calc(242 / 464 * 100%);
+    top: calc(209 / 466.18 * 100%);
+    width: calc(202 / 464 * 100%);
+    height: calc(104 / 466.18 * 100%);
+  }
+
+  .montage-hitbox--sobre-o-que {
+    left: calc(30 / 464 * 100%);
+    top: calc(325 / 466.18 * 100%);
+    width: calc(256 / 464 * 100%);
+    height: calc(92 / 466.18 * 100%);
+  }
+
+  .pratica-written-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1 1 0;
+    min-width: 0;
+    /* No gap here — spacing to pratica-body-montage-related-body is its own
+       animated margin-top (0 while collapsed, 40px once expanded), so the
+       collapsed state doesn't leave a phantom 40px gap under a 0-height
+       box while pratica-headline-body is centered alone (Pratica.tsx). */
+  }
+
+  .pratica-headline-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    /* margin-top is set inline (Pratica.tsx): a measured centering value
+       before the first click, animating down to 0 afterward — "smart
+       animate" into the top-aligned position instead of an instant jump. */
+    transition: margin-top 500ms ease;
+  }
+
+  .pratica-headline,
+  .pratica-body {
+    padding: 16px 0;
+  }
+
+  .pratica-headline__text,
+  .pratica-body__text {
+    text-align: right;
+  }
+
+  .pratica-headline__text {
+    font-size: 42px;
+  }
+
+  .pratica-body__text {
+    font-size: 21px;
+  }
+
+  .pratica-body-montage-related-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 16px 24px;
+    border: 4px solid var(--color-vermelho-impulso);
+    box-shadow: 4px 4px 0 var(--color-vermelho-impulso);
+    overflow: hidden;
+    /* height/opacity are set inline (Pratica.tsx) as measured px values —
+       "auto" can't be transitioned directly, so the natural content height
+       is measured after each swap and animated to as a real number. Same
+       450ms duration as the text's own opacity transition below, so the
+       box resize and the text crossfade stay in sync. */
+    transition: height 450ms ease-in-out, opacity 450ms ease-in-out, margin-top 450ms ease-in-out;
+  }
+
+  .pratica-body-montage-related {
+    margin: 0;
+    width: 100%;
+    font-family: var(--font-pt-sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    color: var(--color-preto);
+    transition: opacity 450ms ease-in-out;
+  }
+
+  .pratica-body-montage-related.is-fading {
+    opacity: 0;
+  }
+
+  .pratica-body-montage-related strong {
+    font-weight: 400;
+    color: var(--color-vermelho-impulso);
+  }
+}
+
+/* Desktop full/wide (>=1280px): same structure, larger montage/type. */
+@media (min-width: 1280px) {
+  .montage-hitbox--quem {
+    left: calc(39 / 592 * 100%);
+    top: calc(55 / 594.78 * 100%);
+    width: calc(276 / 592 * 100%);
+    height: calc(210 / 594.78 * 100%);
+  }
+
+  .montage-hitbox--como {
+    left: calc(315 / 592 * 100%);
+    top: calc(265 / 594.78 * 100%);
+    width: calc(220 / 592 * 100%);
+    height: calc(132 / 594.78 * 100%);
+  }
+
+  .montage-hitbox--sobre-o-que {
+    left: calc(39 / 592 * 100%);
+    top: calc(409 / 594.78 * 100%);
+    width: calc(336 / 592 * 100%);
+    height: calc(132 / 594.78 * 100%);
+  }
+
+  .pratica-headline__text {
+    font-size: 56px;
+  }
+
+  .pratica-body__text {
+    font-size: 20px;
+  }
+
+  .pratica-body-montage-related {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .montage-hitbox--quem {
+    left: calc(44.3 / 672 * 100%);
+    top: calc(62.4 / 675.16 * 100%);
+    width: calc(313.3 / 672 * 100%);
+    height: calc(238.4 / 675.16 * 100%);
+  }
+
+  .montage-hitbox--como {
+    left: calc(357.6 / 672 * 100%);
+    top: calc(300.8 / 675.16 * 100%);
+    width: calc(249.7 / 672 * 100%);
+    height: calc(149.8 / 675.16 * 100%);
+  }
+
+  .montage-hitbox--sobre-o-que {
+    left: calc(44.3 / 672 * 100%);
+    top: calc(464.2 / 675.16 * 100%);
+    width: calc(381.4 / 672 * 100%);
+    height: calc(149.8 / 675.16 * 100%);
+  }
+
+  .pratica-headline__text {
+    font-size: 64px;
+  }
+
+  .pratica-body__text {
+    font-size: 26px;
+  }
+
+  .pratica-body-montage-related {
+    font-size: 26px;
+  }
+}

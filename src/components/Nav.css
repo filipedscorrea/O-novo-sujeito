@@ -1,0 +1,228 @@
+.nav-bar {
+  position: fixed;
+  top: 0;
+  /* left/right, not left:50%+translateX(-50%): the transform approach makes
+     the box's centered position depend on width and transform being
+     computed in perfect agreement, which is exactly the kind of thing a
+     real (non-headless) browser's reserved scrollbar gutter can throw off
+     at narrow widths. left:0/right:0 asks the browser to fill edge-to-edge
+     directly, with nothing to get out of sync. */
+  left: 0;
+  right: 0;
+  height: 96px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: var(--color-vinho-noite);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 250ms ease;
+}
+
+.nav-bar.is-open {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0);
+}
+
+.nav-brand {
+  width: 192px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.hamburger-icon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.hamburger-icon__line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 2px;
+  margin: -1px 0 0 -14px;
+  background: var(--color-creme-luz);
+  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.hamburger-icon__line--top {
+  transform: translateY(-9px) rotate(0deg);
+}
+
+.hamburger-icon__line--middle {
+  opacity: 1;
+}
+
+.hamburger-icon__line--bottom {
+  transform: translateY(9px) rotate(0deg);
+}
+
+.hamburger-icon.is-open .hamburger-icon__line--top {
+  transform: translateY(0) rotate(45deg);
+}
+
+.hamburger-icon.is-open .hamburger-icon__line--middle {
+  opacity: 0;
+}
+
+.hamburger-icon.is-open .hamburger-icon__line--bottom {
+  transform: translateY(0) rotate(-45deg);
+}
+
+/* Mask: overflow hidden container, fixed below the nav-bar. The "door"
+   itself (nav-links) animates via translateY only, never height/scaleY,
+   to avoid deforming its own contents (handoff Parte 2, 1.3). */
+.nav-overlay {
+  position: fixed;
+  top: 96px;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 96px);
+  overflow: hidden;
+  z-index: 59;
+  pointer-events: none;
+}
+
+.nav-overlay.is-open {
+  pointer-events: auto;
+}
+
+.nav-links {
+  width: 100%;
+  height: 100%;
+  background: var(--color-vinho-noite);
+  transform: translateY(-100%);
+  transition: transform 600ms ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Lateral padding is 60px only at 393px — see the 400px+ override below.
+     At that width, 80px left nav-links-content (280px, flex-shrinkable)
+     only 233px of room, 1px short of the "VAMOS CONVERSAR" button's own
+     234px single-line width, wrapping it to two lines. */
+  padding: 160px 60px;
+}
+
+.nav-overlay.is-open .nav-links {
+  transform: translateY(0);
+}
+
+.nav-links-content {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 120px;
+}
+
+.nav-links-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-fade-item {
+  opacity: 0;
+}
+
+.nav-fade-item.is-open {
+  animation: fadeInUp 1125ms ease-out both;
+}
+
+.nav-link {
+  display: inline-block;
+  font-family: var(--font-rodchenko);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.9;
+  letter-spacing: 0.1em;
+  color: var(--color-creme-luz);
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* Hover underline: same technique as the FAQ accordion title underline
+   (Abordagem.css .faq-item__title-wrap/__underline) — a relatively-positioned
+   label wrapping the text, with a sibling bar that scales in from the left.
+   Color follows the link's own text color (currentColor), not the FAQ's red,
+   since this nav sits on the dark Stepanova background. */
+.nav-link__label {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link__underline {
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.nav-link:hover .nav-link__underline {
+  transform: scaleX(1);
+}
+
+.nav-cta-area {
+  width: 100%;
+}
+
+/* Mobile 440 (still the same overlay as 393): the link size reduction is a
+   393-only fix, so 440 keeps the original size. */
+@media (min-width: 400px) {
+  .nav-link {
+    font-size: 36px;
+  }
+
+  .nav-links {
+    padding: 160px 80px;
+  }
+}
+
+/* Range 2 (1024–1279px): compact desktop nav. Hamburger/overlay/door are
+   unmounted above this breakpoint (see useIsDesktopNav in Nav.tsx), replaced
+   by nav-links-list--desktop and the CTA rendered inline in nav-bar. */
+@media (min-width: 1024px) {
+  .nav-links-list--desktop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    height: 64px;
+    gap: 44px;
+    padding: 0 16px;
+  }
+
+  .nav-links-list--desktop .nav-link {
+    font-size: 22px;
+  }
+
+  .primary-button.nav-cta-button--desktop {
+    width: max-content;
+    min-width: 225px;
+    height: 64px;
+    padding: 12px;
+    white-space: nowrap;
+  }
+}
+
+/* Range 3 (>=1280px): "full" variant, identical to Range 2 except link size. */
+@media (min-width: 1280px) {
+  .nav-links-list--desktop {
+    gap: 60px;
+  }
+
+  .nav-links-list--desktop .nav-link {
+    font-size: 30px;
+  }
+}

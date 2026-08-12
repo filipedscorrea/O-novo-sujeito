@@ -1,0 +1,129 @@
+.sobre-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* .sobre-lockup's pre-reveal entrance transform (translateX(-60%), before
+     it scrolls into view) visually extends past this section's own bounds.
+     Without this, that offset paints outside the section and adds real,
+     draggable horizontal scroll to the whole page at narrow widths. */
+  overflow: hidden;
+}
+
+.sobre-lockup {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 110 / 83;
+  object-fit: cover;
+}
+
+.sobre-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.sobre-headline,
+.sobre-body {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.sobre-link {
+  width: 100%;
+}
+
+.sobre-headline__text {
+  margin: 0;
+  font-family: var(--font-rodchenko);
+  font-weight: 700;
+  /* 32px@393 -> 36px@440, same interpolation as hero-headline__text
+     (Hero.css) — two reference points, no behavior change between them. */
+  font-size: clamp(32px, calc(8.51vw - 1.45px), 36px);
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+.sobre-headline__text em {
+  font-style: normal;
+  color: var(--color-vermelho-impulso);
+}
+
+.sobre-body__text {
+  margin: 0;
+  font-family: var(--font-pt-sans);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): horizontal layout, text left /   */
+/* image right. DOM order stays lockup-then-content (never reordered in   */
+/* markup) — row-reverse flips the VISUAL order only, matching hero-      */
+/* section's precedent for this same left/right inversion.                */
+/*                                                                        */
+/* Same full-bleed breakout as hero-section/topics-ticker: escapes        */
+/* .app-shell's 440px-capped column so this section alone can use the     */
+/* true viewport width. .app-shell/.landing-page-content stay untouched — */
+/* abordagem-section and everything below still render inside that capped */
+/* column until their own responsive pass.                                */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .sobre-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    padding: 36px;
+  }
+
+  .sobre-lockup {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+  }
+
+  .sobre-content {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+  }
+
+  .sobre-headline__text {
+    font-size: 42px;
+  }
+
+  .sobre-body__text {
+    font-size: 18px;
+  }
+
+  .sobre-section .secondary-link-area {
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sobre-headline__text {
+    font-size: 56px;
+  }
+
+  .sobre-body__text {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .sobre-headline__text {
+    font-size: 64px;
+  }
+
+  .sobre-body__text {
+    font-size: 26px;
+  }
+}

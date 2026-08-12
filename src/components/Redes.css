@@ -1,0 +1,148 @@
+.redes-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 0;
+  /* Same reasoning as .sobre-section/.pratica-section: .redes-carrossel's
+     pre-reveal translateX paints its whole box (including its own
+     overflow-x:auto post track) outside this section's bounds unless
+     contained. Doesn't affect the carrossel's own internal scroll — that's
+     a separate, local overflow-x:auto that this doesn't touch. */
+  overflow: hidden;
+}
+
+.redes-title-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  padding: 24px 0 16px;
+  border-top: 1px solid var(--color-bordo-estrutura);
+}
+
+.redes-title-area__text {
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  color: var(--color-preto);
+  text-align: left;
+}
+
+.redes-icon-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 24px;
+  padding: 16px 0;
+}
+
+.redes-icon-area__link {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.redes-icon-area__img {
+  width: 44px;
+  height: 44px;
+}
+
+.redes-carrossel {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 24px;
+  padding: 24px 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.redes-carrossel__post {
+  flex-shrink: 0;
+  width: 176px;
+  height: 220px;
+  border: 1px solid var(--color-vermelho-impulso);
+  box-shadow: 2px 4px 0 var(--color-bordo-estrutura);
+}
+
+.redes-carrossel__post:first-child {
+  margin-left: 24px;
+}
+
+.redes-carrossel__post:last-child {
+  margin-right: 24px;
+}
+
+.redes-carrossel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Desktop compact/full/wide (>=1024px): same top-to-bottom structure as   */
+/* mobile, only sizes/gaps change — same full-bleed breakout as every      */
+/* other section, needed here so the carrossel can actually reach the true */
+/* viewport edges (the "sangria" the lateral-padding-0 rule exists for).   */
+/* ---------------------------------------------------------------------- */
+@media (min-width: 1024px) {
+  .redes-section {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    gap: 0;
+    padding: 24px 0;
+  }
+
+  .redes-title-area {
+    padding-top: 48px;
+  }
+
+  .redes-icon-area {
+    gap: 48px;
+  }
+
+  .redes-icon-area__link {
+    width: 56px;
+    height: 56px;
+  }
+
+  .redes-icon-area__img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .redes-carrossel {
+    justify-content: center;
+  }
+
+  .redes-carrossel__post {
+    width: 220px;
+    height: 275px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .redes-title-area__text {
+    font-size: 24px;
+  }
+
+  .redes-carrossel__post {
+    width: 284px;
+    height: 355px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .redes-carrossel__post {
+    width: 324px;
+    height: 405px;
+  }
+}

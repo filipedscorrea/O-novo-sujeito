@@ -1,0 +1,34 @@
+.kicker {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  padding: 16px 0 16px 24px;
+}
+
+.kicker__text {
+  flex-shrink: 0;
+  font-family: var(--font-oswald);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--color-preto);
+  white-space: nowrap;
+}
+
+.kicker__line {
+  flex: 1 1 auto;
+  height: 2px;
+  background: var(--color-bordo-estrutura);
+}
+
+/* Shared across every section that reuses Kicker (abordagem, pratica,
+   contato) so desktop sizes stay in lockstep from one place. Single fixed
+   size across 1024/1280/1440 — it no longer scales per breakpoint here.
+   hero-section is an intentional exception with its own smaller sizes
+   (Hero.css). */
+@media (min-width: 1024px) {
+  .kicker__text {
+    font-size: 26px;
+  }
+}

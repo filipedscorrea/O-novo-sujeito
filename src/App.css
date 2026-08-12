@@ -1,0 +1,15 @@
+.landing-page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 96px;
+}
+
+.landing-page-content > * + * {
+  margin-top: 16px;
+}
+
+.landing-page-content > * {
+  width: 100%;
+  scroll-margin-top: 96px;
+}
